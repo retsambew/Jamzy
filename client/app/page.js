@@ -1,9 +1,10 @@
-import { Home } from "@/components";
+import { HomePage, Navbar } from "@/components";
 
 export default function Home() {
   return (
     <main className="overflow-hidden">
-      <Home />
+      <Navbar />
+      <HomePage />
     </main>
   );
 }
