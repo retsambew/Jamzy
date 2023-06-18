@@ -7,13 +7,13 @@ const HomePage = () => {
       <div className="flex flex-col gap-16 max-md:gap-14 m-10 z-10 relative">
         <div className="flex">
           <Image
-            src="/heroBadge1.jpg"
+            src="/HeroBadge1.jpg"
             width={150}
             height={50}
             className="w-36 h-36 object-cover object-top rounded-full z-10"
           />
           <Image
-            src="/heroBadge2.jpg"
+            src="/HeroBadge2.jpg"
             width={150}
             height={50}
             className="w-36 h-36 object-cover rounded-full -ml-14 z-0"

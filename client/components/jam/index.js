@@ -19,7 +19,10 @@ const Jam = () => {
         </div>
       </div>
       {/* Text Chat */}
-      <div className="h-1/4 w-5/6 max-sm:hidden"></div>
+      <div className="h-1/4 w-5/6 flex flex-col justify-end text-[#BBBBBB] max-sm:hidden">
+        <p>Your video is being monitored. Kindly maintain the terms.</p>
+        <p>Connecting...</p>
+      </div>
       {/* Text Field & Buttons */}
       <div className="flex items-center">
         <input
