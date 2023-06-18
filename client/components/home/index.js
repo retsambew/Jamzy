@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="mx-5 flex items-center h-screen">
+    <div className="mx-5 pb-[12vh] flex items-end h-screen overflow-hidden">
       <div className="flex flex-col gap-16 max-md:gap-14 m-10 z-10 relative">
         <div className="flex">
           <Image
@@ -29,12 +29,12 @@ const HomePage = () => {
           Start Jamming Now
         </Link>
       </div>
-      <div className="absolute z-0 right-0 top-0">
+      <div className="absolute z-0 right-0 top-0 max-sm:left-0">
         <Image
           src="/HeroBg.jpg"
           width={1050}
           height={750}
-          className="h-screen max-w-screen-md object-cover opacity-60"
+          className="h-screen object-cover opacity-60 max-sm:object-left-bottom "
         />
       </div>
     </div>
