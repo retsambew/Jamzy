@@ -4,5 +4,5 @@ Jamzy is a cutting-edge web application designed to unite musicians through shar
 
 This website empowers musicians worldwide to find their perfect musical matches, enabling instrumentalists, vocalists, and composers to easily discover and connect for unforgettable jam sessions and collaborative musical endeavors.
 
-![Live Demo](https://jamzy.vercel.app/)
+[Live Demo](https://jamzy.vercel.app/)  
 NOTE: This site is still under development and live link does not have server connected.
