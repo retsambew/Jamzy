@@ -19,10 +19,6 @@ const VideoChat = () => {
       .catch((error) => {
         console.error("Error accessing media devices.", error);
       });
-
-    socket.on("me", (id) => {
-      setMe(id);
-    });
   }, []);
 
   return (

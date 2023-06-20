@@ -10,12 +10,14 @@ const HomePage = () => {
             src="/HeroBadge1.jpg"
             width={150}
             height={50}
+            alt="badge1"
             className="w-36 h-36 object-cover object-top rounded-full z-10"
           />
           <Image
             src="/HeroBadge2.jpg"
             width={150}
             height={50}
+            alt="badge2"
             className="w-36 h-36 object-cover rounded-full -ml-14 z-0"
           />
         </div>
@@ -34,6 +36,7 @@ const HomePage = () => {
           src="/HeroBg.jpg"
           width={1050}
           height={750}
+          alt="hero-bg"
           className="h-screen object-cover opacity-60 max-sm:object-left-bottom "
         />
       </div>
