@@ -1,4 +1,6 @@
+import Button from "./button";
 import VideoChat from "./video";
+import { createOffer } from "@/utils/socket";
 
 const Jam = () => {
   return (
@@ -20,9 +22,11 @@ const Jam = () => {
         <button className="px-4 py-3 ml-3 mr-2 bg-slateBlue text-lightYellow rounded-lg max-sm:hidden">
           Send
         </button>
-        <button className="px-5 py-3 bg-red text-lightYellow rounded-lg max-sm:mt-8 max-sm:px-10">
-          Skip
-        </button>
+        <Button
+          classes="px-5 py-3 bg-red text-lightYellow rounded-lg max-sm:mt-8 max-sm:px-10"
+          val="Skip"
+          callback={createOffer}
+        />
       </div>
     </div>
   );

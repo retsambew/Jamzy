@@ -1,24 +1,34 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import socket from "@/utils/socket";
+import { socket, peerConnection } from "@/utils/socket";
 
 const VideoChat = () => {
   const [stream, setStream] = useState();
+  const [remoteStream, setRemoteStream] = useState();
 
   const myVideo = useRef();
-  const userVideo = useRef();
+  const remoteVideo = useRef();
   const connectionRef = useRef();
 
+  const setup = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+
+    try {
+      setStream(stream);
+      stream
+        .getTracks()
+        .forEach((track) => peerConnection.addTrack(track, stream));
+      myVideo.current.srcObject = stream;
+    } catch (error) {
+      console.error("Error accessing media devices.", error);
+    }
+  };
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        myVideo.current.srcObject = stream;
-      })
-      .catch((error) => {
-        console.error("Error accessing media devices.", error);
-      });
+    setup();
   }, []);
 
   return (
@@ -38,7 +48,23 @@ const VideoChat = () => {
         </div>
       </div>
       <div className="h-[300px] w-[420px] max-sm:w-5/6">
-        <div className="h-full rounded-lg flex bg-slate-50"></div>
+        {remoteStream ? (
+          <video
+            ref={remoteVideo}
+            className="h-full rounded-lg flex"
+            playsInline
+            autoPlay
+            controls={false}
+          />
+        ) : (
+          <Image
+            src="/loading.svg"
+            alt="loading"
+            className="h-full w-full rounded-lg flex bg-gray-900"
+            width={50}
+            height={50}
+          />
+        )}
         <div className="flex justify-between p-2">
           <h3>Naman Arora</h3>
           <p>Singer</p>
