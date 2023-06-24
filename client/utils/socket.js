@@ -12,6 +12,7 @@ const iceConfig = {
 
 export const socket = io.connect(serverURL);
 const peerConnection = createPeerConnection();
+let peerId;
 
 const createPeerConnection = () => {
   return new RTCPeerConnection(iceConfig);
@@ -36,6 +37,7 @@ socket.on("offerRecieved", async (data) => {
 
   socket.emit("sendAnswer", { answer, from: data.from, to: socket.id });
   console.log("answering:", data);
+  peerId = data.from;
 });
 
 socket.on("answerRecieved", async (data) => {
@@ -43,8 +45,27 @@ socket.on("answerRecieved", async (data) => {
     new RTCSessionDescription(data.answer)
   );
   console.log(data);
+  peerId = data.to;
 });
 
 socket.on("noUsersToConnect", () => {
   alert("Sorry there are not enough active users to pair! \nPlease try later");
+});
+
+const onIceCandidateEvent = (event) => {
+  socket.emit("sendCandidate", {
+    to: peerId,
+    candidate: event.candidate,
+  });
+};
+
+peerConnection.onIceCandidateEvent = onIceCandidateEvent;
+
+socket.on("candidateRecieved", async (data) => {
+  try {
+    const candidate = new RTCIceCandidate(data.candidate);
+    await peerConnection.addIceCandidate(candidate);
+  } catch (error) {
+    console.log(error);
+  }
 });

@@ -47,6 +47,12 @@ export const initIO = (httpServer) => {
       socket.to(data.from).emit("answerRecieved", data);
     });
 
+    socket.on("sendCandidate", (data) => {
+      socket.to(data.to).emit("candidateRecieved", {
+        candidate: data.candidate,
+      });
+    });
+
     // console.log("user count:", activeUsers);
 
     // socket.on("sendRemoteOffer", (data) => {
