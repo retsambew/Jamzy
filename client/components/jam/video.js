@@ -23,6 +23,10 @@ const VideoChat = () => {
         .getTracks()
         .forEach((track) => peerConnection.addTrack(track, stream));
       myVideo.current.srcObject = stream;
+      peerConnection.addEventListener("track", (event) => {
+        const [stream] = event.streams;
+        remoteVideo.current.srcObject = stream;
+      });
     } catch (error) {
       console.error("Error accessing media devices.", error);
     }
@@ -48,14 +52,14 @@ const VideoChat = () => {
         </div>
       </div>
       <div className="h-[300px] w-[420px] max-sm:w-5/6">
-        {remoteStream ? (
-          <video
-            ref={remoteVideo}
-            className="h-full rounded-lg flex"
-            playsInline
-            autoPlay
-            controls={false}
-          />
+        <video
+          ref={remoteVideo}
+          className="h-full rounded-lg flex"
+          playsInline
+          autoPlay
+          controls={false}
+        />
+        {/* {remoteStream ? (
         ) : (
           <Image
             src="/loading.svg"
@@ -64,7 +68,7 @@ const VideoChat = () => {
             width={50}
             height={50}
           />
-        )}
+        )} */}
         <div className="flex justify-between p-2">
           <h3>Naman Arora</h3>
           <p>Singer</p>

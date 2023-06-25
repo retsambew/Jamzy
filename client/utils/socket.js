@@ -9,14 +9,13 @@ const iceConfig = {
     },
   ],
 };
-
-export const socket = io.connect(serverURL);
-const peerConnection = createPeerConnection();
-let peerId;
-
 const createPeerConnection = () => {
   return new RTCPeerConnection(iceConfig);
 };
+
+export const socket = io.connect(serverURL);
+export const peerConnection = createPeerConnection();
+let peerId;
 
 socket.on("connect", () => {
   socket.emit("userConnected");
@@ -57,6 +56,7 @@ const onIceCandidateEvent = (event) => {
     to: peerId,
     candidate: event.candidate,
   });
+  console.log("in");
 };
 
 peerConnection.onIceCandidateEvent = onIceCandidateEvent;
@@ -65,6 +65,7 @@ socket.on("candidateRecieved", async (data) => {
   try {
     const candidate = new RTCIceCandidate(data.candidate);
     await peerConnection.addIceCandidate(candidate);
+    console.log(candidate);
   } catch (error) {
     console.log(error);
   }
