@@ -15,7 +15,7 @@ export const initIO = (httpServer) => {
     socket.on("userConnected", () => {
       // add user to online clients
       activeUsers++;
-      waitingToPair.push({ connectionId: socket.id });
+      waitingToPair.push({ connectionId: socket.id, localId: activeUsers });
       console.log("User Connected. Active Users: ", activeUsers);
       console.log("Users Waiting to be paired: ", waitingToPair);
     });
@@ -28,15 +28,17 @@ export const initIO = (httpServer) => {
 
     socket.on("sendOffer", async (data) => {
       const from = socket.id;
-      if (waitingToPair.length <= 1) {
-        console.log("Cant send request to self");
-        socket.emit("noUsersToConnect");
-      } else {
-        let randomIndex = Math.floor(Math.random() * activeUsers.length);
-        let reciever = await waitingToPair[0].connectionId;
+      if (waitingToPair.length <= 1) socket.emit("noUsersToConnect");
+      else {
+        let randomIndex = Math.floor(Math.random() * waitingToPair.length);
+        let reciever = await waitingToPair[randomIndex].connectionId;
         if (socket.id != reciever) {
           console.log("Offer Send", socket.id, reciever);
-          waitingToPair.pop(0);
+          waitingToPair = waitingToPair.filter((id) => {
+            return (
+              id.connectionId !== socket.id && id.connectionId !== reciever
+            );
+          });
           socket
             .to(reciever)
             .emit("offerRecieved", { offer: data.offer, from });
